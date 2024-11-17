@@ -39,6 +39,19 @@
             margin-top: 1rem;
             padding-left: 0.3rem;
         }
+        .toggle-header {
+            font-size: 1.5rem;
+            color: #00354a;
+            padding-left: 0.3rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .toggle-header:hover {
+            text-decoration: underline;
+        }
+        .toggle-content {
+            display: none;
+            padding-left: 0.3rem;
         p, ul, ol, li {
             margin: 0.5rem 0;
             line-height: 1.8;
@@ -63,6 +76,12 @@
             margin: 1.5rem 0;
         }
     </style>
+    <script>
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -193,7 +212,8 @@
 
 <div class="divider"></div>
 
-<h2>Works and Projects</h2>
+   <h2 class="toggle-header" onclick="toggleContent('works-projects')">Works and Projects</h2>
+            <div id="works-projects" class="toggle-content">
 
 <h3>LET Lab [2023-]</h3>
 <ul>
