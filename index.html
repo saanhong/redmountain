@@ -1,333 +1,1369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>redmountain archive</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <style>
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'); /* Pretendard 불러오기 */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Hong — Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(to bottom, #01233b, #013b07); /* 그라데이션 추가 */
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            background: #e3ebee;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-    h1, h2, h3 {
-            margin: 1rem 0;
-        }
-        h1 {
-            font-size: 2rem;
-            color: #00354a;
-        }
-        h2 {
-            font-size: 1.5rem;
-            color: #00354a;
-            padding-left: 0.3rem;
-        }
-        h3 {
-            font-size: 1.2rem;
-            color: #00354a;
-            margin-top: 1rem;
-            padding-left: 0.3rem;
-        }
+:root {
+  --ink: #1a1a1a;          /* 본문 글씨색 */
+  --paper: #f6f3ee;        /* 배경색 */
+  --accent: #8b3a3a;       /* 강조색 (붉은색) — 링크, 배지, 연도 등 */
+  --accent-light: #c4756e; /* 연한 강조색 — 호버, 선택 시 */
+  --muted: #6b6560;        /* 회색 텍스트 — 부가 정보 */
+  --border: #d6d0c8;       /* 구분선 색 */
+  --card: #faf8f5;         /* 카드/사이드바 배경 */
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --sans: 'DM Sans', 'Helvetica Neue', sans-serif;
+}
 
-        p, ul, ol, li {
-            margin: 0.5rem 0;
-            line-height: 1.8;
-            padding-left: 0.3rem;
-            color: #03161d;
-        }
-        ol {
-            padding-left: 1.5rem;
-        }
-        ul {
-            padding-left: 1.5rem;
-        }
-        a {
-            color: #0f5b72;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .divider {
-            border-top: 1px solid #728a92;
-            margin: 1.5rem 0;
-        }
-    </style>
+html { scroll-behavior: smooth; font-size: 16px; }
 
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--accent-light); color: #fff; }
+
+/* ── SECTION NAV (inline TOC) ── */
+.section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.3rem;
+  margin-top: 2rem;
+}
+.section-nav a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.section-nav a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(139, 58, 58, 0.04);
+}
+
+/* ── BACK TO TOP ── */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 90;
+  width: 40px;
+  height: 40px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 40px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, background 0.2s;
+}
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.back-to-top:hover { background: var(--accent); }
+
+/* ── LAYOUT ── */
+.container { max-width: 1100px; /* 전체 너비 — 이 값으로 좌우 여백 조절 */ margin: 0 auto; padding: 0 2rem; }
+
+/* ── HERO ── */
+.hero {
+  padding: 5rem 0 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px; /* 왼쪽: 소개, 오른쪽: 사이드바 (340px) */
+  gap: 4rem;
+  align-items: start;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.3rem;
+}
+.hero h1 .han { color: var(--muted); font-size: 1.6rem; font-weight: 400; margin-left: 0.5rem; }
+.hero .tagline {
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+  line-height: 1.6;
+}
+.hero .tagline strong { color: var(--ink); font-weight: 600; }
+.hero .graduating {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.9rem;
+  border-radius: 2px;
+  margin-bottom: 2rem;
+}
+
+.sidebar-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 1.8rem;
+}
+.sidebar-card h3 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-card .field-list { list-style: none; }
+.sidebar-card .field-list li {
+  font-size: 0.88rem;
+  padding: 0.3rem 0;
+  color: var(--ink);
+}
+.sidebar-card .field-list li::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--accent-light);
+  border-radius: 50%;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+}
+.contact-row {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.contact-row a {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+  margin-bottom: 0.3rem;
+  word-break: break-all;
+}
+.contact-row a:hover { text-decoration: underline; }
+
+a { color: var(--accent); }              /* 모든 링크 색상 통일 */
+a:hover { color: var(--accent-light); }
+.contact-row .links { display: flex; gap: 1rem; margin-top: 0.6rem; }
+.contact-row .links a {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── RESEARCH PROFILE ── */
+.profile-section {
+  padding: 3rem 0 4rem;
+  border-top: 1px solid var(--border);
+}
+.profile-text {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.85;
+  max-width: 820px;
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+}
+section:last-of-type { padding-bottom: 6rem; }
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.section-header h2 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.section-header .line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section-header .count {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ── EDUCATION ── */
+.edu-item {
+  display: grid;
+  grid-template-columns: 180px 1fr; /* 왼쪽: 날짜(180px), 오른쪽: 내용 */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.edu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.edu-date {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
+  padding-top: 0.2rem;
+}
+.edu-content h3 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.edu-content p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.edu-content .thesis {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 0.4rem;
+}
+
+/* ── PUBLICATIONS ── */
+.pub-item {
+  margin-bottom: 1.6rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--border);
+  transition: border-color 0.2s;
+}
+.pub-item:hover { border-left-color: var(--accent); }
+.pub-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+.badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+}
+/* 배지 색상: q1=붉은, q2=회색, scie=파란, ssci=초록, first=진붉은, review=연한, oral=붉은, poster=회색 */
+.badge.q1 { background: #e8d5d5; color: var(--accent); }
+.badge.q2 { background: #e0ddd8; color: var(--muted); }
+.badge.scie { background: #d5dde8; color: #3a5a8b; }
+.badge.ssci { background: #dde8d5; color: #4a7a3a; }
+.badge.first { background: var(--accent); color: #fff; }
+.badge.review { background: #f0ebe4; color: var(--muted); }
+
+.pub-text {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.pub-text .authors { color: var(--muted); }
+.pub-text .my-name { color: var(--ink); font-weight: 600; }
+.pub-text .title { font-weight: 500; }
+.pub-text .journal { font-style: italic; color: var(--muted); }
+.pub-text .doi { font-size: 0.8rem; color: var(--accent); text-decoration: none; }
+.pub-text .doi:hover { text-decoration: underline; }
+.pub-text .note { font-size: 0.8rem; color: var(--muted); font-style: italic; }
+
+.year-divider {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 2.5rem 0 1.2rem;
+  padding-bottom: 0.3rem;
+}
+.year-divider:first-child { margin-top: 0; }
+
+/* ── PROCEEDINGS ── */
+.proc-item {
+  margin-bottom: 1.2rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid rgba(0,0,0,0.06);
+}
+.proc-item:hover { border-left-color: var(--accent-light); }
+.proc-text {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.proc-text .my-name { color: var(--ink); font-weight: 600; }
+.proc-text .proc-title { color: var(--ink); font-weight: 500; }
+
+/* ── PRESENTATIONS ── */
+.pres-grid {
+  margin-bottom: 1.2rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid rgba(0,0,0,0.06);
+}
+.pres-grid:hover { border-left-color: var(--accent-light); }
+.pres-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+.badge.oral { background: #e8d5d5; color: var(--accent); }
+.badge.poster { background: #dde0e5; color: #4a5568; }
+.pres-text {
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.pres-text .my-name { color: var(--ink); font-weight: 600; }
+.pres-award {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: #f3e8e6;
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  margin-left: 0.3rem;
+}
+
+/* ── REPORTS ── */
+.report-item {
+  margin-bottom: 1.2rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.report-item .my-name { color: var(--ink); font-weight: 600; }
+
+/* ── EXPERIENCE ── */
+.exp-item {
+  display: grid;
+  grid-template-columns: 180px 1fr; /* 왼쪽: 기간(180px), 오른쪽: 내용 */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-date {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.exp-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+.exp-content .org {
+  font-size: 0.88rem;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.exp-content p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.exp-clients {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+/* ── PROJECTS ── */
+.proj-group-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  color: var(--ink);
+}
+.proj-group-title:first-child { margin-top: 0; }
+
+.proj-item {
+  display: grid;
+  grid-template-columns: 100px 1fr; /* 왼쪽: 연도+역할(100px), 오른쪽: 내용 */
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  background: var(--card);
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.proj-item:hover { border-color: var(--border); }
+.proj-year {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.proj-role {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+.proj-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.proj-funder {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+/* ── CAMPAIGNS ── */
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.8rem;
+}
+.campaign-item {
+  font-size: 0.83rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--card);
+  border-left: 2px solid var(--border);
+}
+.campaign-item strong { font-weight: 600; color: var(--ink); }
+.campaign-item span { color: var(--muted); display: block; font-size: 0.78rem; margin-top: 0.15rem; }
+
+/* ── TEACHING ── */
+.teach-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+.teach-date { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
+.teach-content h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.15rem; }
+.teach-content p { font-size: 0.85rem; color: var(--muted); }
+
+/* ── HONORS ── */
+.honor-item {
+  display: grid;
+  grid-template-columns: 80px 1fr; /* 왼쪽: 연도(80px), 오른쪽: 내용 */
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  padding: 0.4rem 0;
+}
+.honor-year {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: right;
+}
+.honor-text { font-size: 0.88rem; color: var(--ink); line-height: 1.5; }
+.honor-text .sub { display: block; font-size: 0.82rem; color: var(--muted); }
+
+/* ── OTHER SECTIONS ── */
+.other-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+.other-block h3 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--ink);
+}
+.other-list {
+  list-style: none;
+}
+.other-list li {
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .hero { padding: 3rem 0 3rem; }
+  .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .container { padding: 0 1.2rem; }
+  .edu-item, .exp-item, .teach-item { grid-template-columns: 1fr; gap: 0.3rem; }
+  .honor-item { grid-template-columns: 60px 1fr; }
+  .section-nav { gap: 0.4rem 0.25rem; }
+  .section-nav a { font-size: 0.72rem; padding: 0.3rem 0.6rem; }
+  .back-to-top { right: 1rem; bottom: 1rem; width: 36px; height: 36px; line-height: 36px; font-size: 1rem; }
+  .proj-item { grid-template-columns: 1fr; }
+}
+
+/* ── ANIMATION ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>SAN HONG [홍 산; 洪山]</h1>
-        <p>Currently a Ph.D. candidate at <strong><a href="https://www.let.snu.ac.kr/">Life Enhancing Technology Lab</a></strong>, Seoul National University. I am expected to graduate on August of 2026!</p>
 
-        <div class="divider"></div>
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
-        <h2>Research Profile</h2>
-        <p>My research develops human-centered assistive and health technologies by integrating biomechanics and physiological measurement with 
-            AI-driven modeling and human factors methods. Fluent in quantitative, qualitative, and mixed-methods approaches, I conduct lab-based 
-            and field studies using motion analysis, EMG, and multimodal behavioral data, translating empirical findings into deployable systems, 
-            including LLM-based conversational agents, across hardware, mobile, and XR platforms. My work spans the full design cycle—from 
-            participatory needs assessment through prototyping to validation—with diverse disability populations including older adults, producing 
-            evidence-based, inclusive, and scalable human–AI systems for rehabilitation, accessibility, and daily living. I collaborate across disciplines 
-            and engage with disability communities through living lab methodologies to ensure research addresses real-world needs.</p>
-
-      <h3>Research Interest</h3>
-        <p> Gerontology, Disability Studies, CNS Disorders, Assistive Technology, Inclusive AI, HRI & HCI, Health Equity</p>    
-        <h3>Contact</h3>
-        <p> saanhong@snu.ac.kr</p>        
-        <h3>Works</h3>
-        <ul>
-        <li><a href="https://scholar.google.com/citations?user=6lB9pykAAAAJ&hl=en&authuser=1">Google Scholar</a></li>
-        <li><a href="https://orcid.org/0000-0002-8464-1002">ORCID</a></li>
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <!-- 졸업 예정 배지 — 졸업 후 이 줄 삭제 -->
+        <div class="graduating">Graduating Aug 2026</div>
+        <h1>San Hong <span class="han">홍 산 · 洪山</span></h1>
+        <p class="tagline">
+          Ph.D. Candidate at <strong>Life Enhancing Technology Lab</strong>, Seoul National University.
+          Developing human-centered assistive and health technologies for diverse disability populations and older adults.
+        </p>
+        <!-- 섹션 이동 버튼 — 섹션 추가/삭제 시 여기도 수정 -->
+        <div class="section-nav">
+          <a href="#education">Education</a>
+          <a href="#publications">Publications</a>
+          <a href="#proceedings">Proceedings</a>
+          <a href="#presentations">Presentations</a>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#teaching">Teaching</a>
+          <a href="#honors">Honors</a>
+          <a href="#others">Others</a>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>Fields of Interest</h3>
+        <ul class="field-list">
+          <!-- 관심분야 추가/수정: <li>새 분야</li> -->
+          <li>Gerontology &amp; Disability Studies</li>
+          <li>Assistive Technology</li>
+          <li>Inclusive AI</li>
+          <li>HRI &amp; HCI</li>
+          <li>Health Equity</li>
         </ul>
-        <div class="divider"></div>
-
-        <h2>Education</h2>
-
-                <p><strong>Ph.D Course, Seoul National University</strong> (Mar 2023 - )</p>
-                <ul>
-                    <li><strong>Doctor of Philosophy in Engineering:</strong> Life Enhancing Technology Lab, Human Factors and Ergonomics major, Dept. of Industrial Engineering, College of Engineering (Advisor: Woojin Park)</li>
-                </ul>
-                <p><strong>M.S., Seoul National University</strong> (Mar 2021 - Feb 2023)</p>
-                <ul>
-                    <li><strong>Master of Sport Science:</strong> Adapted Physical Activity Lab, Human Exercise Science major, Dept. of Kinesiology (Advisor: Yongho Lee)</li>
-                </ul>
-                <p><strong>B.S. & B.A., Sogang University</strong> (Mar 2014 - Feb 2019)</p>
-                <ul>
-                    <li><strong>Bachelor of Arts and Science:</strong> Art & Technology, School of Art & Technology</li>
-                    <li><strong>Bachelor of Arts:</strong> British and American Language and Literature, School of Humanities (Double Major)</li>
-                </ul>
- 
-       
-        <div class="divider"></div>
-
-        <h2>Publications</h2>
-        <ol>
-            <li><strong>Hong, S.</strong> & Kim, T. (2026). How Strength Training Reshapes Body Schema in Women with Severe Cerebral Palsy: A Mixed-Methods Phenomenological Study. <em>Disability and Rehabilitation.</em> Accepted for publication.</li>
-            <li><strong>Hong, S.</strong>, Lee, H., Sohn, M., Hwang, K., Kim, T., & Park, W. (2025). Exploring Usability of Mobile Vision Assist Applications for People with Vision Impairment. <em>Assistive Technology</em>. Online First. <a href="https://doi.org/10.1080/10400435.2025.2596030"> DOI: 10.1080/10400435.2025.2596030</a></li>
-            <li>Kim, H.<sup>#</sup>, <strong>Hong, S.<sup>#</sup></strong>, Park, W. & Ahn, J. (2025).  A Bottom-Up Classification of Wheelchair Users Based on Propulsion Kinematics beyond Injury Level: Exploratory Findings. <em>IEEE Transactions on Neural Systems & Rehabilitation Engineering. 33,</em> 3878-3887. <a href="https://ieeexplore.ieee.org/document/11177588"> DOI: 10.1109/TNSRE.2025.3613726</a> (#: equally contributed)</li>
-            <li><strong>Hong, S.</strong> & Park, W. (2025). Developing User-Centered System Design Guidelines for Explainable AI: a Systematic Literature Review. <em>Artificial Intelligence Review. 58,</em> 386. <a href="https://doi.org/10.1007/s10462-025-11363-y"> DOI: 10.1007/s10462-025-11363-y</a></li>
-            <li><strong>Hong, S.</strong> (2025). A Pilot Study on Mapping Wheelability in Urban Environment. <em>Disability and Rehabilitation: Assistive Technology, 20</em>(7), 1975-1993. <a href="https://www.tandfonline.com/eprint/ENV5YSZRCCSWXVJJ3HIU/full?target=10.1080/17483107.2025.2539437"> DOI: 10.1080/17483107.2025.2539437</a></li>
-            <li><strong>Hong, S.<sup>#</sup></strong>, Kim, H.<sup>#</sup>, Ahn, J., & Park, W. (2025). Influence of Time Since Injury and Physical Activity Level on Upper Limb Kinematics and Muscle Activation During Wheelchair Propulsion in Complete T12/L1 Spinal Cord Injury. <em>BMC Musculoskeletal Disorders, 26,</em> 807. <a href="https://doi.org/10.1186/s12891-025-08987-0">DOI: 10.1186/s12891-025-08987-0</a> (#: equally contributed)</li>
-            <li><strong>Hong, S.</strong>, Lee, Y., & Park, W. (2024). Evaluating the delivery of physical activity for people with developmental disabilities using an online knowledge translation approach: part 2 – content quality. <em>Disability and Rehabilitation: Assistive Technology, 19</em>(8), 3130–3138. <a href="https://doi.org/10.1080/17483107.2024.2351497">DOI: 10.1080/17483107.2024.2351497</a></li>
-            <li><strong>Hong, S.</strong>, Lee, Y., & Park, W. (2024). Evaluating the delivery of physical activity for people with developmental disabilities using an online knowledge translation approach: part 1 – web accessibility. <em>Disability and Rehabilitation: Assistive Technology, 19</em>(8), 2925–2933. <a href="https://doi.org/10.1080/17483107.2024.2322637">DOI: 10.1080/17483107.2024.2322637</a></li>
-            <li><strong>Hong, S.</strong>, Yang, J., Kim, D., & Lee, Y. (2023). Accessible Guide for People With Intellectual Disabilities in a Fitness Environment: A Delphi Study. <em>Adapted Physical Activity Quarterly, 40</em>(1), 38–62. <a href="https://doi.org/10.1123/apaq.2022-0036">DOI: 10.1123/apaq.2022-0036</a></li>
-            <li><strong>Hong, S.</strong> Developing a Wheelchair Accessibility Audit Framework for Urban Redevelopment: A Case Study of Seoul's Cheongjin District. Under Review.</li>
-            <li><strong>Hong, S.</strong>, Lee, H., Sohn, M., Baek, D., Jeon, M., & Park, W. Hierarchical Leisure Constraints of Individuals with Mobility Disabilities and XR Technologies as Negotiation Strategies. Under Review.</li>
-            <li><strong>Hong, S.</strong> Cultural Conceptualizations of Rapport in Assistive Technology Implementation for Elder Care: An Integrative Review. Under Review.</li>
-            <li><strong>Hong, S.</strong>, Sohn, M., Cho, H., & Park, W. Comparative Usability Evaluation of Mobile Medication Management Services for Individuals with Vision Impairment. Under Review.</li>
-
-        </ol>
-
-        <div class="divider"></div>
-
-        <h2>Conference Proceedings</h2>
-        <h3>2025</h3>
-        <ol> 
-        <li><strong>Hong, S.</strong>, & Park, W. A Qualitative Study on Leisure Constraints of Individuals with Mobility Disabilities and the Potential of XR Leisure Content. <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting</em>, Accepted.</li>
-        <li><strong>Hong, S.</strong>, & Park, W. (2025). Design Requirements for Passengers with Disabilities in Aircraft Lavatory: A Systematic Review. <em>The Japanese Journal of Ergonomics, 61</em>(1). <a href="https://doi.org/10.5100/jje.61.2D03-01">DOI: 10.5100/jje.61.2D03-01</a></li>
-        </ol>
-        
-        <h3>2024</h3>
-        <ol start="3">    
-            <li><strong>Hong, S.</strong>, Hong, Y., Cho, W., Park, J., Jeong, S., & Yun, M. (2024, August). Adaptive Clothing for People with Spinal Cord Injury in Activities of Daily Living, Occupational Management, and Sports. <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 68</em>(1). <a href="https://doi.org/10.1177/10711813241260318">DOI: 10.1177/10711813241260318</a></li>
-            <li><strong>Hong, S.</strong>, Kim, H., Ahn, J., & Park, W. (2024, August). Impacts of Disability Duration and Physical Activity Level on Wheelchair Propulsion Strategies in People with T12/L1 Spinal Cord Injury. <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 68</em>(1). <a href="https://doi.org/10.1177/10711813241262448">DOI: 10.1177/10711813241262448</a></li>
-            <li>Sohn, M., <strong>Hong, S.</strong>, Kim, N., Jeong, S., & Park, W. (2024, August). Effects of Glass Transmittance, Font Brightness and Font Size on Text Legibility in LCD Home Appliance Interface. <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 68</em>(1). <a href="https://doi.org/10.1177/10711813241275517">DOI: 10.1177/10711813241275517</a> (Awarded for the Best Conference Paper)</li>
-            <li>Kim, H., <strong>Hong, S.</strong>, Ahn, J., & Park, W. (2024, August). Classifying Wheelchair Propulsion Strategies: A New Bottom-Up Approach Based on Kinematic Data Analysis. In <em>2024 Annual International Conference of the IEEE Engineering in Medicine and Biology Society (EMBC).</em> IEEE. <a href="https://ieeexplore.ieee.org/abstract/document/10782146">DOI: 10.1109/EMBC53108.2024.10782146</a></li>
-        </ol>
-      
-        <h3>2023</h3>
-        <ol start="7">  
-            <li><strong>Hong, S.</strong>, Park, J., & Park, W. (2023, October). Co-Designing an Accessible Gym: Inviting ‘Others’ to the Public. <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 67</em>(1). <a href="https://doi.org/10.1177/21695067231192537">DOI: 10.1177/21695067231192537</a></li>
-        </ol>
-        
-        <h3>2022</h3>
-        <ol start="8"> 
-            <li><strong>Hong, S.</strong>, Kim, S., Oh, M., Kim, S., Hwang, K., & Yun, M. (2022, October). Exploring the Eating-Out Experience of People With Vision Impairment in Korea: A Persona-Based Method. <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting, 66</em>(1), 1265–1269. <a href="https://doi.org/10.1177/1071181322661381">DOI: 10.1177/1071181322661381</a></li>
-        </ol>
-    
-
-        <div class="divider"></div>
-
-       <h2>Reports</h2>
-        <ul>
-        <li><strong>Hong, S.</strong> (2025). 협동체 여객기 화장실 접근성 개선을 위한 정책 방안 연구 - 2023년 미국 ACAA 개정에 대응한 시나리오 기반 설계 개선 방안 및 정책 제언.  용역 보고서, 국회의원 연구단체 약자의 눈.</li>
-        <li>Lee, M., <strong>Hong, S.</strong>, & Kim, E. (2024). 발달장애 근로자 대상 성공적 노화를 위한 신체활동 프로그램 개발 및 적용 연구 (A Study on Developing and Applying a Physical Activity Program for Successful Aging for Workers with Developmental Disabilities). 기본과제보고서, <a href="https://viewer.kead.or.kr/streamdocs/view/sd;streamdocsId=_zql1oQBjI9W875NgpHpjT-8XnZo937g2urmbH6Qt50">한국장애인고용공단 고용개발원 Korea Employment Agency for Persons with Disabilities</a>.</li>
-        </ul>
-
-          <div class="divider"></div>
-    <h2>Oral & Poster Presentations</h2>
-
-    <h3>2025</h3>
-        <ol>
-         <li><strong>Hong, S.</strong>, Kim, T., Ryu, J., Sohn, M., Hwang, K., Lee, H., Jeon, M., Baek, D., & Park, W. (2025). What propels community-based care work for older population? The engineering of “Jeong” in elder care. <em>2025 Autumn Conference of the Ergonomics Society of Korea.</em> Jeju, Republic of Korea.</li>   
-         <li><strong>Hong, S.</strong>, & Park, W. (2025). Design Requirements for Passengers with Disabilities in Aircraft Lavatory: A Systematic Review. <em>The 66th annual conference of Japan Human Factors and Ergonomics Society</em>, Kitakyushu, Fukuoka, Japan.</li>
-         <li>Jeon, M., <strong>Hong, S.</strong>, Sohn, M., Lee, H., Baek, D., & Park, W. (2025). Evaluating the Quality of Co - Design Methodology for Developing Motivational–Reward Mechanisms in Exergames for Individuals with Mobility Disabilities. <em>2025 Autumn Conference of the Ergonomics Society of Korea.</em> Jeju, Republic of Korea.</li>
-         <li><strong>Hong, S.</strong>, Kang, Y., & Park, W. (2025). A Neo-Piagetian Framework for Understanding Anthropomorphic Response Patterns in Conversational Agents. <em>CIKM 2025</em>, Seoul, Korea.</li>
-         <li>Sohn, M., <strong>Hong, S.</strong>, & Park, W. (2025). Verbalized Uncertainty and Citation Match in LLM Question Answering: A Pilot Study on Adoption and Verification. <em>CIKM 2025</em>, Seoul, Korea.</li> 
-         <li><strong>Hong, S.</strong>, & Park, W. (2025). A Qualitative Study on Leisure Constraints of Individuals with Mobility Disabilities and the Potential of XR Leisure Content. <em>ASPIRE: Presented by HFES</em>, Chicago, IL, USA.</li>
-        </ol>
-    <h3>2024</h3>
-        <ol start="7">
-            <li><strong>Hong, S.</strong>, Lee, H., Yoon, S., Sohn, M., & Park, W. (2024). Can XR bridge leisure gaps? A qualitative study on leisure constraints and potential of XR content for individuals with mobility disabilities. <em>2024 Autumn Conference of the Ergonomics Society of Korea</em>, Gyeonggi, Republic of Korea.</li>
-            <li><strong>Hong, S.</strong>, Kim, H., Ahn, J., & Park, W. (2024). Impacts of disability duration and physical activity level on wheelchair propulsion strategies in people with T12/L1 spinal cord injury. <em>ASPIRE: Presented by HFES</em>, Phoenix, AZ, USA.</li>
-            <li><strong>Hong, S.</strong>, Hong, Y., Park, J., Cho, W., & Yun, M. (2024). Adaptive clothing for people with spinal cord injury in activities of daily living, occupational management, and sports. <em>ASPIRE: Presented by HFES</em>, Phoenix, AZ, USA.</li>
-            <li>Kim, H., <strong>Hong, S.</strong>, Park, W., & Ahn, J. (2024). Classifying wheelchair propulsion strategies: A new bottom-up approach based on kinematic data analysis. <em>46th Annual International Conference of the IEEE Engineering in Medicine & Biology Society</em>, Orlando, FL, USA.</li>
-            <li><strong>Hong, S.</strong>, Sohn, M., Kim, N., Jeong, S., & Park, W. (2024). Effects of glass transmittance, lighting luminance, and font size on home appliance legibility: LED display. <em>2024 IEA</em>, Jeju, Korea.</li>
-            <li>Sohn, M., <strong>Hong, S.</strong>, Kim, N., Jeong, S., & Park, W. (2024). Factors affecting text legibility on LCD interfaces of home appliances. <em>2024 IEA</em>, Jeju, Korea.</li>
-            <li><strong>Hong, S.</strong>, Piao, Q., & Park, W. (2024). Developing user-centered system design guidelines for explainable AI: A systematic literature review. <em>KCC 2024</em>, Jeju, Korea.</li>
-            <li><strong>Hong, S.</strong>, Piao, Q., & Park, W. (2024). A systematic literature review of human-centered evaluation constructs for explainable AI. <em>KCC 2024</em>, Jeju, Korea.</li>
-        </ol>
-        
-    <h3>2023</h3>
-        <ol start="15">
-            <li><strong>Hong, S.</strong>, Kim, H., Ahn, J., & Park, W. (2023). Duration of disability, professional experience in sports, and wheelchair propulsion strategy in people with spinal cord injury: Case study. <em>2023 Winter KSSB</em>, Jeonju, Korea.</li>
-            <li>Kim, H., <strong>Hong, S.</strong>, Park, W., & Ahn, J. (2023). Analysis of wheelchair propulsion patterns in wheelchair users with various spinal cord injury levels: A study on strategy development through bottom-up classification. <em>2023 Winter KSSB</em>, Jeonju, Korea.</li>
-            <li><strong>Hong, S.</strong>, Park, J., & Park, W. (2023). Co-designing an accessible gym: Inviting ‘others’ to the public. <em>HFES 67th International Annual Meeting</em>, Washington, USA.</li>
-        </ol>
-        
-    <h3>2022</h3>
-        <ol start="18">
-            <li><strong>Hong, S.</strong>, Park, J., & Lee, Y. (2022). Bridging hospital and community: Exploring physical literacy for people with spinal cord injury in Korea. <em>2022 Fall KOSAPA</em>, Seoul, Korea.</li>
-            <li><strong>Hong, S.</strong>, & Lee, Y. (2022). Evaluating online knowledge translation of adapted physical activity for people with developmental disabilities. <em>2022 NAFAPA</em>, Toronto, Canada.</li>
-            <li><strong>Hong, S.</strong>, Kim, S., Oh, M., Kim, S., Hwang, K., & Yun, M. (2022). Exploring the eating-out experience of people with vision impairment in Korea. <em>HFES 66th International Annual Meeting</em>, Georgia, USA.</li>
-            <li><strong>Hong, S.</strong>, & Lee, Y. (2022). Evaluating online knowledge translation of adapted physical activity for people with developmental disabilities. <em>2022 Spring KOSAPA</em>, Cheonan, Korea.</li>
-        </ol>
-        
-    <h3>2021</h3>
-        <ol start="22">
-            <li><strong>Hong, S.</strong>, Yang, J., Kim, D., & Lee, Y. (2021). Accessible guide for people with intellectual disabilities in fitness environment: A Delphi study. <em>2021 Fall KOSAPA</em>, Online.</li>
-        </ol>
-
-        <div class="divider"></div>
-
-<h2>Professional Experience</h2>
-    <h3>2019-2021</h3>
-    <p><strong>Art Director, DDB Korea</strong> (2019-2021)</p>
-    <ul>
-        <li>Major Clients: LG Electronics, LG HE Design Lab, AXA, Royal Canin, Papa John’s, ARAMCO, Burt’s Bees, Athé.</li>
-        <li>Responsible for concept development, ideation, and visual design for accounts including prints, web and mobile content, and OOH.</li>
-    </ul>
-    
-    <p><strong>Account Executive, Domo Brodeur</strong> (2019)</p>
-    <ul>
-        <li>Major Clients: MetLife, Ministry of Employment and Labor, Health Insurance Review and Assessment Service, Source Music of HYBE Ent.</li>
-        <li>Developed campaign ideas and designed visuals for projects.</li>
-    </ul>
-    
-    <h3>2018-2019</h3>
-    <p><strong>Content Designer, MISO</strong></p>
-    <ul>
-        <li>Created an accessible cleaner mobile web to onboard new cleaners and instruct cleaning procedures.</li>
-        <li>Achievement: Successfully reduced incoming onboarding calls by 20%.</li>
-    </ul>
-    
-    <h3>2016</h3>
-    <p><strong>Undergraduate Intern, SG Robotics</strong></p>
-    <p>Prof. Kyoungchul Kong, Dept. of Mechanical Engineering, Sogang University (currently at KAIST).</p>
-
-<div class="divider"></div>
-
-        
-<h2>Projects</h2>
-
-<h3>Life Enhancing Technology Lab (2023-)</h3>
-<ul>
-    <li>(2025) [SPI] Development of User-Centered Robotic Technologies for Elderly Care and Daily Living Support: User Research and Design Problem Definition (Funding: Junghun Foundation)</li>
-    <li>(2025) [SPI] Development of a Vision-Based Assistive Tool for Supporting Health Management and Leisure Activities in Older Adults (Funding: Junghun Foundation)</li>
-    <li>(2024-2026) [SPI] Development of barrier-free experiential XR contents technology to improve accessibility to online activities for the physically disabled (Funding: Ministry of Culture, Sports and Tourism)</li>
-    <li>(2023-2025) [SPI] Plug and Play Explainable AI (Funding: Institute of Information & Communications Technology Planning & Evaluation)</li>
-    <li>(2024) [SPI] Ergonomic study on real-time automatic audio descriptions for visually impaired individuals (Funding: Junghun Foundation)</li>
-    <li>(2023) [SPI] Establishing factor-specific criteria for legibility of home appliance controls (Client: Samsung Electronics)</li>
-    <li>(2023) Research on smart clothing technology and design idea generation (Client: Huachang Korea)</li>
-    <li>(2023) Study of excavator operator-work lever-machine system control experience (Client: HD Hyundai Construction Equipment)</li>
-</ul>
-
-<h3>Adapted Physical Activity Lab (2021-2022)</h3>
-<ul>
-    <li>SNU Fun&Kick (Funding: Seoul City Council)</li>
-    <li>SNUComm (Part Funding: Siheung Local Government)</li>
-    <li>SNU Fit&Able (Part Funding: Siheung Local Government)</li>
-</ul>
-
-<h3>Commercial Campaigns (2019-2021)</h3>
-<ul>
-    <li><strong>ARAMCO (of Saudi Arabia)</strong>: Subway & Bus wrapping Ads, Space Design, OOH, ATL Ads (15s, 30s), Print</li>
-    <li><strong>Papa John’s</strong>: ATL Ads (15s, 30s), Package Design, Print</li>
-    <li><strong>Royal Canin</strong>: ATL/BTL Ads (15s, 30s, 60s), Print</li>
-    <li><strong>AXA</strong>: ATL/BTL Ads (15s, 30s, 60s), Radio, Print</li>
-    <li><strong>LG Electronics Care Solution</strong>: ATL/BTL Ads (15s, 30s, 60s), Print</li>
-    <li><strong>LG Signature</strong> (2019): Global ATL/BTL Ads (15s, 30s, 60s), Print, Digital Campaign (in East Asia, Western and Northern Europe) </li>
-    <li><strong>LG Signature</strong> (2020): Global ATL/BTL Ads (15s, 30s, 60s), Print, Digital Campaign (in East Asia, Western and Northern Europe) </li>
-    <li><strong>LG Pra.L</strong>: Print, Photography, SNS Campaign</li>
-    <li><strong>Burt's Bees</strong>: BTL Ads, Print, Digital Campaign</li>
-    <li><strong>Athé (of LG Fashion)</strong>: Print, Branding</li>
-</ul>
-
-<h3>Other Projects</h3>
-<ul>
-    <li><a href="https://www.apnews.kr/news/articleList.html">Ad Critic, AP News</a> (2020-2022; 2024-2025)</li>
-    <li>SK Coding Challenge for Teenagers with Disabilities (2022)</li>
-    <li>Inclugym: Inclusive gym for all (2021-2022) </li>
-</ul>
-
-<div class="divider"></div>
-        
-<h2>Teaching Experience</h2>
-
-<h3>2025</h3>
-<ul>
-    <li><strong>Course Instructor, Nodeul Center for Independent Living:</strong> Group Physical Activity and Health Management Program for Women with Severe Brain Lesions</li>
-    <li><strong>Course Instructor, Nodeul School for People with Disabilities:</strong> Physical Activity Program for People with Developmental Disabilities</li>
-</ul>
-<h3>2024</h3>
-<ul>
-    <li><strong>Course Instructor, Nodeul Center for Independent Living:</strong> Group Physical Activity and Health Management Program for Women with Severe Brain Lesions</li>
-    <li><strong>Program Instructor, Autism Society of Korea:</strong> Group Physical Activity Program for Adults with Developmental Disabilities</li>
-</ul>
-
-<h3>2018, 2023</h3>
-<ul>
-    <li><strong>Course & Project Instructor, Seoul Institute for Lifelong Education:</strong> Basic Photography and Self-Expression</li>
-</ul>
-
-<h3>2021-2022</h3>
-<ul>
-    <li><strong>Teaching Assistant, 054.032(001) Bicycle and Sports Science:</strong> A 2-credit class of theory and outdoor practice</li>
-</ul>
-
-<div class="divider"></div>
-
-<h3>Honors and Awards</h3>
-<ul>
-    <li><strong>2nd place, Outstanding Graduate Student Award</strong>, BK21 Industrial Innovation Analytics ERG, 2025, Seoul National University (2026)</li>
-    <li><strong>Lee Joonghan Award (Research)</strong> An honor awarded to the top graduate student with the most outstanding research performance in the Department of Industrial Engineering at SNU: Department of Industrial Engineering, Seoul National University (2025)</li>
-    <li><strong>Next Generation Scholarships in Fundamental Academic Sciences:</strong> Seoul National University (2023-2024)</li>
-    <li><strong>BK21 Research Fund:</strong> Seoul National University (2021-2022)</li>
-    <li><strong>Alumni Scholarship:</strong> Sogang University (2018-2019)</li>
-    <li><strong>Selection (Photography):</strong> Trend MZ 2019, Hanbit Biz (Dec 2018)</li>
-    <li><strong>1st Place:</strong> Imagination Startup Contest, Sogang University (Nov 2015)</li>
-    <li><strong>Selection:</strong> Women in SNU (Essay), Seoul National University (2021)</li>
-    <li><strong>3rd Place:</strong> Artwall Competition (Graphic Design), Seoul National University (Apr 2021)</li>
-    <li><strong>3rd Place:</strong> Essay on Sexual Harassment at Workplace, Seoul Sexual Harassment Prevention Center (Jul 2021)</li>
-    <li><strong>Selection:</strong> Education Content for Equality (Photography), Seoul National University (Nov 2021)</li>
-</ul>
-<div class="divider"></div> 
-        <footer>
-            <p>Last updated: Feb 8, 2026</p>
-        </footer>
+        <div class="contact-row">
+          <a href="mailto:saanhong@snu.ac.kr">saanhong@snu.ac.kr</a>
+          <div class="links">
+            <a href="https://scholar.google.com/citations?user=6lB9pykAAAAJ&hl=en&authuser=1" target="_blank">Google Scholar</a>
+            <a href="https://orcid.org/0000-0002-8464-1002" target="_blank">ORCID</a>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</header>
+
+<!-- RESEARCH PROFILE -->
+<div class="container profile-section fade-in">
+  <p class="profile-text">
+    My research develops human-centered assistive and health technologies by integrating biomechanics and physiological measurement with AI-driven modeling and human factors methods. Fluent in quantitative, qualitative, and mixed-methods approaches, I conduct lab-based and field studies using motion analysis, EMG, and multimodal behavioral data, translating empirical findings into deployable systems, including LLM-based conversational agents, across hardware, mobile, and XR platforms. My work spans the full design cycle—from participatory needs assessment through prototyping to validation—with diverse disability populations including older adults, producing evidence-based, inclusive, and scalable human–AI systems for rehabilitation, accessibility, and daily living. I collaborate across disciplines and engage with disability communities through living lab methodologies to ensure research addresses real-world needs.
+  </p>
+</div>
+
+<div class="container">
+
+<!-- EDUCATION -->
+<section id="education" class="fade-in">
+  <div class="section-header">
+    <h2>Education</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-date">Mar 2023 – Aug 2026</div>
+    <div class="edu-content">
+      <h3>Ph.D. in Engineering</h3>
+      <p>Human Factors and Ergonomics, Dept. of Industrial Engineering, Seoul National University</p>
+      <p>Life Enhancing Technology Lab (Advised by Woojin Park)</p>
+      <div class="thesis">Thesis: Design, Development, and Validation of a Conversational Agent for Medication Management Among Individuals with Vision Impairment</div>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-date">Mar 2021 – Feb 2023</div>
+    <div class="edu-content">
+      <h3>M.S. in Sport Science</h3>
+      <p>Human Exercise Science, Dept. of Kinesiology, College of Education, Seoul National University</p>
+      <p>Adapted Physical Activity Lab (Advised by Yongho Lee)</p>
+      <div class="thesis">Thesis: Evaluating online knowledge translation of adapted physical activity for people with developmental disabilities</div>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-date">Mar 2014 – Feb 2019</div>
+    <div class="edu-content">
+      <h3>B.S. &amp; B.A., Sogang University</h3>
+      <p>Bachelor of Arts and Science: Art &amp; Technology, School of Art &amp; Technology</p>
+      <p>Bachelor of Arts: British &amp; American Language and Literature, School of Humanities (Double Major)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     PUBLICATIONS — 저널 논문
+     
+     새 논문 추가: pub-item 블록 복사 후 해당 연도 아래에 붙여넣기
+     배지 조합:
+       <span class="badge scie">SCIE</span>              — SCIE 저널
+       <span class="badge ssci">SSCI</span>              — SSCI 저널
+       <span class="badge q1">Q1</span>                  — Q1 등급
+       <span class="badge q2">Q2</span>                  — Q2 등급
+       <span class="badge first">1st Author</span>       — 1저자
+       <span class="badge first">1st &amp; Corresponding</span> — 1저자+교신
+       <span class="badge review">Under Review</span>    — 심사중
+     내 이름: <span class="my-name">Hong, S.</span>
+     저널명: <span class="journal">저널명</span>
+     DOI: <a class="doi" href="URL">DOI: ...</a>
+     새 연도: <div class="year-divider">2027</div>
+     ════════════════════════════════════════════════════ -->
+<section id="publications" class="fade-in">
+  <div class="section-header">
+    <h2>Publications</h2>
+    <div class="line"></div>
+    <span class="count">9 Journal + 4 Under Review</span> <!-- 논문 수 변경 시 여기 수정 -->
+  </div>
+
+  <div class="year-divider">Accepted</div>
+
+  <!-- P9: Hong & Kim — Disability and Rehabilitation -->
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q2">Q2</span><span class="badge first">1st &amp; Corresponding</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span> &amp; Kim, T. How Strength Training Reshapes Body Schema in Women with Severe Cerebral Palsy: A Mixed-Methods Phenomenological Study. <span class="journal">Disability and Rehabilitation.</span> <span class="note">Accepted for Publication.</span>
+    </div>
+  </div>
+
+  <div class="year-divider">2025</div>
+
+  <!-- P8: Hong et al. — Assistive Technology -->
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Lee, H., Sohn, M., Hwang, K., Kim, T., &amp; Park, W. (2025). Exploring Usability of Mobile Vision Assist Applications for People with Vision Impairment. <span class="journal">Assistive Technology.</span> Online First. <a class="doi" href="https://doi.org/10.1080/10400435.2025.2596030">DOI: 10.1080/10400435.2025.2596030</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      Kim, H.<sup>#</sup>, <span class="my-name">Hong, S.</span><sup>#</sup>, Park, W. &amp; Ahn, J. (2025). A Bottom-Up Classification of Wheelchair Users Based on Propulsion Kinematics beyond Injury Level: Exploratory Findings. <span class="journal">IEEE Transactions on Neural Systems &amp; Rehabilitation Engineering.</span> 33, 3878-3887. <a class="doi" href="https://doi.org/10.1109/TNSRE.2025.3613726">DOI: 10.1109/TNSRE.2025.3613726</a> <span class="note">(#: Equally contributed)</span>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span> &amp; Park, W. (2025). Developing User-Centered System Design Guidelines for Explainable AI: a Systematic Literature Review. <span class="journal">Artificial Intelligence Review.</span> 58, 386. <a class="doi" href="https://doi.org/10.1007/s10462-025-11363-y">DOI: 10.1007/s10462-025-11363-y</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q1">Q1</span><span class="badge first">1st &amp; Corresponding</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span> (2025). A Pilot Study on Mapping Wheelability in Urban Environment. <span class="journal">Disability and Rehabilitation: Assistive Technology.</span> 20(7), 1975-1993. <a class="doi" href="https://doi.org/10.1080/17483107.2025.2539437">DOI: 10.1080/17483107.2025.2539437</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q2">Q2</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span><sup>#</sup>, Kim, H.<sup>#</sup>, Ahn, J., &amp; Park, W. (2025). Influence of Time Since Injury and Physical Activity Level on Upper Limb Kinematics and Muscle Activation During Wheelchair Propulsion in Complete T12/L1 Spinal Cord Injury. <span class="journal">BMC Musculoskeletal Disorders.</span> 26, 807. <a class="doi" href="https://doi.org/10.1186/s12891-025-08987-0">DOI: 10.1186/s12891-025-08987-0</a> <span class="note">(#: Equally contributed)</span>
+    </div>
+  </div>
+
+  <div class="year-divider">2024</div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Lee, Y., &amp; Park, W. (2024). Evaluating the delivery of physical activity for people with developmental disabilities using an online knowledge translation approach: part 2 – content quality. <span class="journal">Disability and Rehabilitation: Assistive Technology.</span> 19(8), 3130–3138. <a class="doi" href="https://doi.org/10.1080/17483107.2024.2351497">DOI: 10.1080/17483107.2024.2351497</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Lee, Y., &amp; Park, W. (2024). Evaluating the delivery of physical activity for people with developmental disabilities using an online knowledge translation approach: part 1 – web accessibility. <span class="journal">Disability and Rehabilitation: Assistive Technology.</span> 19(8), 2925–2933. <a class="doi" href="https://doi.org/10.1080/17483107.2024.2322637">DOI: 10.1080/17483107.2024.2322637</a>
+    </div>
+  </div>
+
+  <div class="year-divider">2023</div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q2">Q2</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Yang, J., Kim, D., &amp; Lee, Y. (2023). Accessible Guide for People With Intellectual Disabilities in a Fitness Environment: A Delphi Study. <span class="journal">Adapted Physical Activity Quarterly.</span> 40(1), 38–62. <a class="doi" href="https://doi.org/10.1123/apaq.2022-0036">DOI: 10.1123/apaq.2022-0036</a>
+    </div>
+  </div>
+
+  <div class="year-divider">Under Review</div>
+
+  <div class="pub-item">
+    <div class="pub-badges"><span class="badge review">Under Review</span><span class="badge first">1st Author</span></div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span> Developing a Wheelchair Accessibility Audit Framework for Urban Redevelopment: A Case Study of Seoul's Cheongjin District. <span class="note">Under Review.</span>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges"><span class="badge review">Under Review after Revision</span><span class="badge first">1st &amp; Corresponding</span></div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Lee, H., Sohn, M., Baek, D., Jeon, M., &amp; Park, W. Hierarchical Leisure Constraints of Individuals with Mobility Disabilities and XR Technologies as Negotiation Strategies. <span class="note">Under Review after Revision.</span>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges"><span class="badge review">Under Review</span><span class="badge first">1st &amp; Corresponding</span></div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span> Cultural Conceptualizations of Rapport in Assistive Technology Implementation for Elder Care: An Integrative Review. <span class="note">Under Review.</span>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges"><span class="badge review">Under Review</span><span class="badge first">1st Author</span></div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Sohn, M., Cho, H., &amp; Park, W. Comparative Usability Evaluation of Mobile Medication Management Services for Individuals with Vision Impairment. <span class="note">Under Review.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     CONFERENCE PROCEEDINGS
+     새 항목: proc-item 블록 복사
+     1저자면 pub-badges 줄 추가, 아니면 생략
+     ════════════════════════════════════════════════════ -->
+<section id="proceedings" class="fade-in">
+  <div class="section-header">
+    <h2>Conference Proceedings</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="year-divider">2025</div>
+
+  <div class="proc-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
+    <div class="proc-text">
+      <span class="my-name">Hong, S.</span>, &amp; Park, W. <span class="proc-title">A Qualitative Study on Leisure Constraints of Individuals with Mobility Disabilities and the Potential of XR Leisure Content.</span> <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting.</em> Accepted.
+    </div>
+  </div>
+
+  <div class="proc-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
+    <div class="proc-text">
+      <span class="my-name">Hong, S.</span>, &amp; Park, W. (2025). <span class="proc-title">Design Requirements for Passengers with Disabilities in Aircraft Lavatory: A Systematic Review.</span> <em>The Japanese Journal of Ergonomics, 61</em>(1). <a class="doi" href="https://doi.org/10.5100/jje.61.2D03-01">DOI: 10.5100/jje.61.2D03-01</a>
+    </div>
+  </div>
+
+  <div class="year-divider">2024</div>
+
+  <div class="proc-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
+    <div class="proc-text">
+      <span class="my-name">Hong, S.</span>, Hong, Y., Cho, W., Park, J., Jeong, S., &amp; Yun, M. (2024). <span class="proc-title">Adaptive Clothing for People with Spinal Cord Injury in Activities of Daily Living, Occupational Management, and Sports.</span> <em>Proceedings of the HFES Annual Meeting, 68</em>(1). <a class="doi" href="https://doi.org/10.1177/10711813241260318">DOI: 10.1177/10711813241260318</a>
+    </div>
+  </div>
+
+  <div class="proc-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
+    <div class="proc-text">
+      <span class="my-name">Hong, S.</span>, Kim, H., Ahn, J., &amp; Park, W. (2024). <span class="proc-title">Impacts of Disability Duration and Physical Activity Level on Wheelchair Propulsion Strategies in People with T12/L1 Spinal Cord Injury.</span> <em>Proceedings of the HFES Annual Meeting, 68</em>(1). <a class="doi" href="https://doi.org/10.1177/10711813241262448">DOI: 10.1177/10711813241262448</a>
+    </div>
+  </div>
+
+  <div class="proc-item">
+    <div class="proc-text">
+      Sohn, M., <span class="my-name">Hong, S.</span>, Kim, N., Jeong, S., &amp; Park, W. (2024). <span class="proc-title">Effects of Glass Transmittance, Font Brightness and Font Size on Text Legibility in LCD Home Appliance Interface.</span> <em>Proceedings of the HFES Annual Meeting, 68</em>(1). <a class="doi" href="https://doi.org/10.1177/10711813241275517">DOI: 10.1177/10711813241275517</a>
+    </div>
+  </div>
+
+  <div class="proc-item">
+    <div class="proc-text">
+      Kim, H., <span class="my-name">Hong, S.</span>, Park, W., &amp; Ahn, J. (2024). <span class="proc-title">Classifying Wheelchair Propulsion Strategies: A New Bottom-Up Approach Based on Kinematic Data Analysis.</span> In <em>2024 Annual International Conference of the IEEE EMBC.</em> <a class="doi" href="https://doi.org/10.1109/EMBC53108.2024.10782146">DOI: 10.1109/EMBC53108.2024.10782146</a>
+    </div>
+  </div>
+
+  <div class="year-divider">2023</div>
+
+  <div class="proc-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
+    <div class="proc-text">
+      <span class="my-name">Hong, S.</span>, Park, J., &amp; Park, W. (2023). <span class="proc-title">Co-Designing an Accessible Gym: Inviting 'Others' to the Public.</span> <em>Proceedings of the HFES Annual Meeting, 67</em>(1). <a class="doi" href="https://doi.org/10.1177/21695067231192537">DOI: 10.1177/21695067231192537</a>
+    </div>
+  </div>
+
+  <div class="year-divider">2022</div>
+
+  <div class="proc-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
+    <div class="proc-text">
+      <span class="my-name">Hong, S.</span>, Kim, S., Oh, M., Kim, S., Hwang, K., &amp; Yun, M. (2022). <span class="proc-title">Exploring the Eating-Out Experience of People With Vision Impairment in Korea: A Persona-Based Method.</span> <em>Proceedings of the HFES Annual Meeting, 66</em>(1), 1265–1269. <a class="doi" href="https://doi.org/10.1177/1071181322661381">DOI: 10.1177/1071181322661381</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     PRESENTATIONS — Oral & Poster
+     새 항목: pres-grid 블록 복사
+     배지: <span class="badge oral">Oral</span> 또는 <span class="badge poster">Poster</span>
+     1저자면 <span class="badge first">1st Author</span> 추가
+     수상: 끝에 <span class="pres-award">★ 수상명</span> 추가
+     ════════════════════════════════════════════════════ -->
+<section id="presentations" class="fade-in">
+  <div class="section-header">
+    <h2>Presentations</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="year-divider">2025</div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Kim, T., Ryu, J., Sohn, M., Hwang, K., Lee, H., Jeon, M., Baek, D., &amp; Park, W. (2025). What propels community-based care work for older population? The engineering of "Jeong" in elder care. 2025 Autumn Conference of the Ergonomics Society of Korea. Jeju.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, &amp; Park, W. (2025). Design Requirements for Passengers with Disabilities in Aircraft Lavatory: A Systematic Review. The 66th annual conference of Japan Human Factors and Ergonomics Society. Kitakyushu, Fukuoka, Japan.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span></div>
+    <div class="pres-text">Jeon, M., <span class="my-name">Hong, S.</span>, Sohn, M., Lee, H., Baek, D., &amp; Park, W. (2025). Evaluating the Quality of Co-Design Methodology for Developing Motivational–Reward Mechanisms in Exergames for Individuals with Mobility Disabilities. 2025 Autumn Conference of the Ergonomics Society of Korea. Jeju.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Kang, Y., &amp; Park, W. A Neo-Piagetian Framework for Understanding Anthropomorphic Response Patterns in Conversational Agents. CIKM 2025, Seoul, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span></div>
+    <div class="pres-text">Sohn, M., <span class="my-name">Hong, S.</span>, &amp; Park, W. Verbalized Uncertainty and Citation Match in LLM Question Answering: A Pilot Study on Adoption and Verification. CIKM 2025, Seoul, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, &amp; Park, W. A Qualitative Study on Leisure Constraints of Individuals with Mobility Disabilities and the Potential of XR Leisure Content. ASPIRE: Presented by HFES, Chicago, IL, USA.</div>
+  </div>
+
+  <div class="year-divider">2024</div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Lee, H., Yoon, S., Sohn, M., &amp; Park, W. (2024). Can XR bridge leisure gaps? A qualitative study on leisure constraints and potential of XR content for individuals with mobility disabilities. 2024 Autumn Conference of the Ergonomics Society of Korea, Gyeonggi.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Kim, H., Ahn, J., &amp; Park, W. (2024). Impacts of disability duration and physical activity level on wheelchair propulsion strategies in people with T12/L1 spinal cord injury. ASPIRE: Presented by HFES, Phoenix, AZ, USA.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Hong, Y., Park, J., Cho, W., &amp; Yun, M. (2024). Adaptive clothing for people with spinal cord injury in activities of daily living, occupational management, and sports. ASPIRE: Presented by HFES, Phoenix, AZ, USA.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span></div>
+    <div class="pres-text">Kim, H., <span class="my-name">Hong, S.</span>, Park, W., &amp; Ahn, J. (2024). Classifying wheelchair propulsion strategies: A new bottom-up approach based on kinematic data analysis. 46th Annual International Conference of the IEEE EMBC, Orlando, FL, USA.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Sohn, M., Kim, N., Jeong, S., &amp; Park, W. (2024). Effects of glass transmittance, lighting luminance, and font size on home appliance legibility: LED display. 22nd Triennial Congress of the International Ergonomics Association, Jeju, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span></div>
+    <div class="pres-text">Sohn, M., <span class="my-name">Hong, S.</span>, Kim, N., Jeong, S., &amp; Park, W. (2024). Factors affecting text legibility on LCD interfaces of home appliances. 22nd Triennial Congress of the International Ergonomics Association, Jeju, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span></div>
+    <div class="pres-text">
+      Sohn, M., <span class="my-name">Hong, S.</span>, Kim, N., Jeong, S., &amp; Park, W. (2024). Effects of Glass Transmittance, Font Brightness and Font Size on Text Legibility in LCD Home Appliance Interface. ASPIRE: Presented by HFES, Phoenix, AZ, USA. <span class="pres-award">★ Best Conference Paper</span>
+    </div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Piao, Q., &amp; Park, W. (2024). Developing user-centered system design guidelines for explainable AI: A systematic literature review. KCC 2024, Jeju, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Piao, Q., &amp; Park, W. (2024). A systematic literature review of human-centered evaluation constructs for explainable AI. KCC 2024, Jeju, Korea.</div>
+  </div>
+
+  <div class="year-divider">2023</div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span></div>
+    <div class="pres-text">
+      <span class="my-name">Hong, S.</span>, Kim, H., Ahn, J., &amp; Park, W. (2023). Duration of disability, professional experience in sports, and wheelchair propulsion strategy in people with spinal cord injury: Case study. 2023 Winter KSSB, Jeonju, Korea. <span class="pres-award">★ Best Oral Presentation</span>
+    </div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span></div>
+    <div class="pres-text">Kim, H., <span class="my-name">Hong, S.</span>, Park, W., &amp; Ahn, J. (2023). Analysis of wheelchair propulsion patterns in wheelchair users with various spinal cord injury levels: A study on strategy development through bottom-up classification. 2023 Winter KSSB, Jeonju, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Park, J., &amp; Park, W. (2023). Co-designing an accessible gym: Inviting 'others' to the public. HFES 67th International Annual Meeting, Washington, USA.</div>
+  </div>
+
+  <div class="year-divider">2022</div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Park, J., &amp; Lee, Y. (2022). Bridging hospital and community: Exploring physical literacy for people with spinal cord injury in Korea. 2022 Fall KOSAPA, Seoul, Korea.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, &amp; Lee, Y. (2022). Evaluating online knowledge translation of adapted physical activity for people with developmental disabilities. 2022 NAFAPA, Toronto, Canada.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge poster">Poster</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Kim, S., Oh, M., Kim, S., Hwang, K., &amp; Yun, M. (2022). Exploring the eating-out experience of people with vision impairment in Korea. HFES 66th International Annual Meeting, Georgia, USA.</div>
+  </div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, &amp; Lee, Y. (2022). Evaluating online knowledge translation of adapted physical activity for people with developmental disabilities. 2022 Spring KOSAPA, Cheonan, Korea.</div>
+  </div>
+
+  <div class="year-divider">2021</div>
+
+  <div class="pres-grid">
+    <div class="pres-badges"><span class="badge oral">Oral</span><span class="badge first">1st Author</span></div>
+    <div class="pres-text"><span class="my-name">Hong, S.</span>, Yang, J., Kim, D., &amp; Lee, Y. (2021). Accessible guide for people with intellectual disabilities in fitness environment: A Delphi study. 2021 Fall KOSAPA, Online.</div>
+  </div>
+</section>
+
+<!-- REPORTS -->
+<section id="reports" class="fade-in">
+  <div class="section-header">
+    <h2>Reports</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="report-item">
+    <span class="my-name">Hong, S.</span> (2025). 협동체 여객기 화장실 접근성 개선을 위한 정책 방안 연구 — 2023년 미국 ACAA 개정에 대응한 시나리오 기반 설계 개선 방안 및 정책 제언. 용역 보고서, 국회의원 연구단체 약자의 눈.
+  </div>
+
+  <div class="report-item">
+    Lee, M., <span class="my-name">Hong, S.</span>, &amp; Kim, E. (2024). 발달장애 근로자 대상 성공적 노화를 위한 신체활동 프로그램 개발 및 적용 연구. 기본과제보고서, 한국장애인고용공단 고용개발원.
+  </div>
+</section>
+
+<!-- PROFESSIONAL EXPERIENCE -->
+<section id="experience" class="fade-in">
+  <div class="section-header">
+    <h2>Professional Experience</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">May 2019 – Jan 2021</div>
+    <div class="exp-content">
+      <h3>Art Director</h3>
+      <div class="org">DDB Korea</div>
+      <p>Led overall art direction and visual design including concept development and ideation; delivered integrated visual assets across print, web, mobile, and out-of-home (OOH) media for multinational clients.</p>
+      <div class="exp-clients">Clients: LG Electronics, LG HE Design Lab, AXA, Royal Canin, Papa John's, ARAMCO, Burt's Bees, Athé</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">Feb – May 2019</div>
+    <div class="exp-content">
+      <h3>Account Executive</h3>
+      <div class="org">Domo Brodeur</div>
+      <p>Led campaign ideation and visual design; developed and executed cohesive visual concepts across multiple client projects.</p>
+      <div class="exp-clients">Clients: MetLife, Ministry of Employment and Labor, HIRA, Source Music of HYBE Ent.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">Oct 2018 – Jan 2019</div>
+    <div class="exp-content">
+      <h3>Content Designer</h3>
+      <div class="org">MISO</div>
+      <p>Designed an accessible mobile web service for cleaner onboarding and task instruction; improved usability and reduced incoming onboarding support calls by 20%.</p>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2016</div>
+    <div class="exp-content">
+      <h3>Undergraduate Intern</h3>
+      <div class="org">SG Robotics, Dept. of Mechanical Engineering, Sogang University</div>
+      <p>Advised by Kyungchul Kong (currently at KAIST).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     PROJECTS
+     새 프로젝트: proj-item 블록 복사
+     역할: Lead Researcher / Researcher / PI / Invited Researcher
+     새 그룹: <div class="proj-group-title">그룹명</div>
+     ════════════════════════════════════════════════════ -->
+<section id="projects" class="fade-in">
+  <div class="section-header">
+    <h2>Projects</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="proj-group-title">Life Enhancing Technology Lab (2023 –)</div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2025</div><div class="proj-role">Lead Researcher</div></div>
+    <div><div class="proj-name">Development of User-Centered Robotic Technologies for Elderly Care and Daily Living Support: User Research and Design Problem Definition</div><div class="proj-funder">Junghun Foundation</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2025</div><div class="proj-role">Lead Researcher</div></div>
+    <div><div class="proj-name">Development of a Vision-Based Assistive Tool for Supporting Health Management and Leisure Activities in Older Adults</div><div class="proj-funder">Junghun Foundation</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2024–2026</div><div class="proj-role">Lead Researcher</div></div>
+    <div><div class="proj-name">Development of barrier-free experiential XR contents technology to improve accessibility to online activities for the physically disabled</div><div class="proj-funder">Korea Creative Content Agency, Ministry of Culture, Sports and Tourism</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2023–2026</div><div class="proj-role">Lead Researcher</div></div>
+    <div><div class="proj-name">Plug and Play Explainable AI</div><div class="proj-funder">Institute of Information &amp; Communications Technology Planning &amp; Evaluation</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2024</div><div class="proj-role">Lead Researcher</div></div>
+    <div><div class="proj-name">Ergonomic study on real-time automatic audio descriptions for visually impaired individuals</div><div class="proj-funder">Junghun Foundation</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2023</div><div class="proj-role">Lead Researcher</div></div>
+    <div><div class="proj-name">Establishing factor-specific criteria for legibility of home appliance controls</div><div class="proj-funder">Samsung Electronics</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2023</div><div class="proj-role">Researcher</div></div>
+    <div><div class="proj-name">Research on smart clothing technology and generating design ideas</div><div class="proj-funder">Huachang Korea</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2023</div><div class="proj-role">Researcher</div></div>
+    <div><div class="proj-name">User system optimization for excavators</div><div class="proj-funder">HD Hyundai Construction Equipment</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2023</div><div class="proj-role">Researcher</div></div>
+    <div><div class="proj-name">Enhancing UI/UX of Learning Management System</div><div class="proj-funder">Seoul National University</div></div>
+  </div>
+
+  <div class="proj-group-title">Personal / Independently Secured</div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2025</div><div class="proj-role">PI</div></div>
+    <div><div class="proj-name">Improvisational Performance by Women with Severe Disabilities: Weaving the Threads of the Body</div><div class="proj-funder">Korea Disability Arts &amp; Culture Center, Ministry of Culture, Sports and Tourism</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2023</div><div class="proj-role">Invited Researcher</div></div>
+    <div><div class="proj-name">A Study on Developing and Applying a Physical Activity Program for Successful Aging for Workers with Developmental Disabilities</div><div class="proj-funder">Korea Employment Agency for Persons with Disabilities (PI: Miji Lee)</div></div>
+  </div>
+
+  <div class="proj-group-title">Adapted Physical Activity Lab (2021–2022)</div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2022</div><div class="proj-role">Researcher</div></div>
+    <div><div class="proj-name">SNUComm Fit&amp;Able</div><div class="proj-funder">Siheung Local Government</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2021–2022</div><div class="proj-role">Researcher</div></div>
+    <div><div class="proj-name">SNU Fun&amp;Kick</div><div class="proj-funder">Seoul City Council</div></div>
+  </div>
+
+  <div class="proj-item">
+    <div><div class="proj-year">2022</div><div class="proj-role">Researcher</div></div>
+    <div><div class="proj-name">SNUComm Fun</div><div class="proj-funder">Siheung Local Government</div></div>
+  </div>
+
+  <div class="proj-group-title">Commercial Campaigns (2019–2021)</div>
+
+  <div class="campaign-grid">
+    <div class="campaign-item"><strong>ARAMCO</strong><span>Subway &amp; Bus wrapping Ads, Space Design, OOH, ATL Ads, Print</span></div>
+    <div class="campaign-item"><strong>Papa John's</strong><span>ATL Ads, Package Design, Print</span></div>
+    <div class="campaign-item"><strong>Royal Canin</strong><span>ATL/BTL Ads, Print</span></div>
+    <div class="campaign-item"><strong>AXA</strong><span>ATL/BTL Ads, Radio, Print</span></div>
+    <div class="campaign-item"><strong>LG Electronics Care Solution</strong><span>ATL/BTL Ads, Print</span></div>
+    <div class="campaign-item"><strong>LG Signature (2019, 2020)</strong><span>Global ATL/BTL Ads, Print, Digital Campaign</span></div>
+    <div class="campaign-item"><strong>LG Pra.L</strong><span>Print, Photography, SNS Campaign</span></div>
+    <div class="campaign-item"><strong>Burt's Bees</strong><span>BTL Ads, Print, Digital Campaign</span></div>
+    <div class="campaign-item"><strong>Athé (LG Fashion)</strong><span>Print, Branding</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     TEACHING — 새 항목: teach-item 블록 복사
+     ════════════════════════════════════════════════════ -->
+<section id="teaching" class="fade-in">
+  <div class="section-header">
+    <h2>Teaching Experience</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="teach-item">
+    <div class="teach-date">Jan 2024 – Dec 2025</div>
+    <div class="teach-content">
+      <h3>Course Instructor</h3>
+      <p>Nodeul Center for Independent Living — Physical activity and health management program for women with severe brain lesions</p>
+    </div>
+  </div>
+
+  <div class="teach-item">
+    <div class="teach-date">Aug 2025 – Present</div>
+    <div class="teach-content">
+      <h3>Course Instructor</h3>
+      <p>Nodeul School for People with Disabilities — Physical activity and health class for people with developmental disabilities</p>
+    </div>
+  </div>
+
+  <div class="teach-item">
+    <div class="teach-date">Fall 2019</div>
+    <div class="teach-content">
+      <h3>Course Instructor</h3>
+      <p>Seoul Institute for Lifelong Education — Basic Photography and Self-Expression</p>
+    </div>
+  </div>
+
+  <div class="teach-item">
+    <div class="teach-date">2021 – 2022</div>
+    <div class="teach-content">
+      <h3>Teaching Assistant</h3>
+      <p>054.032(001) Bicycle and Sports Science — A 2-credit class of theory and outdoor practice<br>Summer &amp; Fall 2021; Spring &amp; Fall 2022</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     HONORS & AWARDS — 새 항목: honor-item 블록 복사
+     연도는 honor-year, 부가설명은 <span class="sub">기관명</span>
+     ════════════════════════════════════════════════════ -->
+<section id="honors" class="fade-in">
+  <div class="section-header">
+    <h2>Honors &amp; Awards</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2026</div>
+    <div class="honor-text">2nd place, Outstanding Graduate Student Award, BK21 Industrial Innovation Analytics ERG, 2025 <span class="sub">Seoul National University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2025</div>
+    <div class="honor-text">Lee Joonghan Award (Research) <span class="sub">An honor awarded to the top graduate student with the most outstanding research performance in the Department of Industrial Engineering at SNU</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2024</div>
+    <div class="honor-text">Best Oral Presentation <span class="sub">Winter KSSB</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2023–24</div>
+    <div class="honor-text">Next Generation Scholarships in Fundamental Academic Sciences <span class="sub">Seoul National University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2023</div>
+    <div class="honor-text">&lt;Proprioception&gt; Selected for Special Screening <span class="sub">Knowbox Dance Film Festival (USA, Mexico, and ROK)</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2021–22</div>
+    <div class="honor-text">BK21 Research Fund <span class="sub">Seoul National University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2021</div>
+    <div class="honor-text">Winner, Women in SNU (Essay) <span class="sub">Seoul National University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2021</div>
+    <div class="honor-text">3rd Place, Artwall Competition (Graphic Design) <span class="sub">Seoul National University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2021</div>
+    <div class="honor-text">3rd Place, Essay on Sexual Harassment at Workplace <span class="sub">Seoul Sexual Harassment Prevention Center</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2021</div>
+    <div class="honor-text">3rd Place, Education Content for Equality (Photography) <span class="sub">Seoul National University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2018–19</div>
+    <div class="honor-text">Alumni Scholarship <span class="sub">Sogang University</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2018</div>
+    <div class="honor-text">Selection (Photography), Trend MZ 2019 <span class="sub">Hanbit Biz</span></div>
+  </div>
+
+  <div class="honor-item">
+    <div class="honor-year">2015</div>
+    <div class="honor-text">Winner, Imagination Startup Contest <span class="sub">Sogang University</span></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     OTHERS — 새 블록: other-block 복사, 새 항목: <li> 추가
+     ════════════════════════════════════════════════════ -->
+<section id="others" class="fade-in">
+  <div class="section-header">
+    <h2>Others</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="other-grid">
+    <div class="other-block">
+      <h3>Academic Service</h3>
+      <ul class="other-list">
+        <li>Journal Reviewer — <em>WORK: A Journal of Prevention, Assessment &amp; Rehabilitation</em> (2025 –)</li>
+        <li>Journal Reviewer — <em>Disability and Rehabilitation: Assistive Technology</em> (2025 –)</li>
+      </ul>
+    </div>
+
+    <div class="other-block">
+      <h3>Other Activities</h3>
+      <ul class="other-list">
+        <li>Invited Advertisement Critic, AP News (Jun 2020 – Jun 2025; Jan 2026 –)</li>
+        <li>Invited Photographer &amp; Project Manager, Seoul Institute for Lifelong Education (2018–2022)</li>
+        <li>CSR Program Developer, Samsung Display (Dec 2021 – Jan 2022)</li>
+      </ul>
+    </div>
+
+    <div class="other-block">
+      <h3>Invited Talks</h3>
+      <ul class="other-list">
+        <li>TEDxSNU</li>
+        <li>TEDxIncheonU</li>
+        <li>TEDxPOSTECH</li>
+      </ul>
+    </div>
+
+    <div class="other-block">
+      <h3>Media Coverage</h3>
+      <ul class="other-list">
+        <li>Memorial Picture Project</li>
+        <li>GV, Busan International Film Festival</li>
+        <li>KT&amp;G Trend Research</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- end container -->
+
+<footer>
+  <div class="container">
+    Last updated: Feb 19, 2026 <!-- 날짜 수정 --> · San Hong · Seoul, Republic of Korea
+  </div>
+</footer>
+
+<script>
+// Back to top button
+const btn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  btn.classList.toggle('visible', window.scrollY > 600);
+});
+
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
