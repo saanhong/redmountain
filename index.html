@@ -362,11 +362,13 @@ section:last-of-type { padding-bottom: 6rem; }
 /* ── REPORTS ── */
 .report-item {
   margin-bottom: 1.2rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--border);
   font-size: 0.88rem;
   line-height: 1.65;
-  color: var(--muted);
+  color: var(--ink);
 }
-.report-item .my-name { color: var(--ink); font-weight: 600; }
+.report-item:hover { border-left-color: var(--accent); }
 
 /* ── EXPERIENCE ── */
 .exp-item {
@@ -1025,6 +1027,7 @@ footer {
   </div>
 
   <div class="report-item">
+    <div class="pub-badges"><span class="badge first">1st Author</span></div>
     <span class="my-name">Hong, S.</span> (2025). 협동체 여객기 화장실 접근성 개선을 위한 정책 방안 연구 — 2023년 미국 ACAA 개정에 대응한 시나리오 기반 설계 개선 방안 및 정책 제언. 용역 보고서, 국회의원 연구단체 약자의 눈.
   </div>
 
