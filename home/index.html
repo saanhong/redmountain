@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Hong — redmountain archive</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- SITE NAV — 모든 페이지 공통. 현재 페이지에 class="active" -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="/home/" aria-label="Home"><img src="/seal.png" alt="San Hong seal"></a>
+    <div class="nav-links">
+      <a href="/home/" class="active">Home</a>
+      <a href="/publications/">Publications</a>
+      <a href="/projects/">Projects</a>
+      <a href="/experience/">Experience</a>
+    </div>
+  </div>
+</nav>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <!-- 졸업 예정 배지 — 졸업 후 이 줄 삭제 -->
+        <div class="graduating">Graduating Aug 2026</div>
+        <h1>San Hong <span class="han">홍 산ㆍ洪 山</span></h1>
+        <p class="tagline">
+          Ph.D. at <strong><a href="https://let.snu.ac.kr" target="_blank">Life Enhancing Technology Lab</a></strong>, Seoul National University.
+          Developing human-centered assistive and health technologies for diverse disability populations and older adults.
+        </p>
+        <a class="cv-button" href="https://drive.google.com/file/d/1rmtexjwwuVeIBKNCPRmOj4jztpJ6fxpQ/view?usp=sharing" target="_blank">Download CV ↓</a>
+      </div>
+      <div class="sidebar-card">
+        <h3>Fields of Interest</h3>
+        <ul class="field-list">
+          <!-- 관심분야 추가/수정: <li>새 분야</li> -->
+          <li>Gerontology &amp; Disability Studies</li>
+          <li>Assistive Technology</li>
+          <li>Inclusive AI</li>
+          <li>HRI &amp; HCI</li>
+          <li>Health Equity</li>
+        </ul>
+        <div class="contact-row">
+          <a href="mailto:saanhong@snu.ac.kr">saanhong@snu.ac.kr</a>
+          <div class="links">
+            <a href="https://scholar.google.com/citations?user=6lB9pykAAAAJ&hl=en&authuser=1" target="_blank">Google Scholar</a>
+            <a href="https://orcid.org/0000-0002-8464-1002" target="_blank">ORCID</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ════════════════════════════════════════════════════
+     NEWS — 최근 소식
+     새 소식 추가: 맨 위에 <li> 블록 복사해서 붙여넣기
+     날짜: <span class="news-date">Mon YYYY</span>  ← 월 채워넣기
+     태그(선택): <span class="tag">Paper</span> / Award / Talk / Film 등
+     오래된 소식은 6~8개 넘어가면 아래에서 삭제
+     ════════════════════════════════════════════════════ -->
+<section class="news-section fade-in" id="news">
+  <div class="section-header">
+    <h2>News</h2>
+    <div class="line"></div>
+  </div>
+  <ul class="news-list">
+    <!-- ⚠️ 아래 날짜들은 자리표시 — 실제 월로 수정하세요 -->
+    <li>
+      <span class="news-date">2026</span>
+      <span class="news-text"><span class="tag">Paper</span>New paper accepted at <em>Disability &amp; Society</em>: a wheelchair accessibility audit framework for urban redevelopment.</span>
+    </li>
+    <li>
+      <span class="news-date">2026</span>
+      <span class="news-text"><span class="tag">Paper</span>"Cultural Conceptualizations of Rapport in Assistive Technology Implementation for Elder Care" is now online first in <em>Assistive Technology</em>.</span>
+    </li>
+    <li>
+      <span class="news-date">2026</span>
+      <span class="news-text"><span class="tag">Film</span>&lt;Bekhor [The Firstborn]&gt; officially selected at the Seoul Dance Film Festival.</span>
+    </li>
+    <li>
+      <span class="news-date">2026</span>
+      <span class="news-text"><span class="tag">Talk</span>Oral presentation at the 2026 Spring Conference of the Ergonomics Society of Korea, Pusan.</span>
+    </li>
+    <li>
+      <span class="news-date">2025</span>
+      <span class="news-text"><span class="tag">Award</span>Received the Lee Joonghan Award (Research), the top research honor for graduate students in Industrial Engineering at SNU.</span>
+    </li>
+  </ul>
+</section>
+
+<!-- RESEARCH PROFILE -->
+<section class="profile-section fade-in" id="about">
+  <div class="section-header">
+    <h2>About</h2>
+    <div class="line"></div>
+  </div>
+  <p class="profile-text">
+    My research develops human-centered assistive and health technologies by integrating biomechanics and physiological measurement with AI-driven modeling and human factors methods. 
+    Fluent in quantitative, qualitative, and mixed-methods approaches, I conduct lab-based and field studies using motion analysis, EMG, and multimodal behavioral data, translating empirical findings 
+    into deployable systems, including LLM-based conversational agents, across hardware, mobile, and XR platforms. My work spans the full design cycle—from participatory needs assessment through prototyping 
+    to validation—with diverse disability populations including older adults, producing evidence-based, inclusive, and scalable human–AI systems for rehabilitation, accessibility, and daily living. 
+    I collaborate across disciplines and engage with disability communities through living lab methodologies to ensure research addresses real-world needs.
+  </p>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="fade-in">
+  <div class="section-header">
+    <h2>Education</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-date">Mar 2023 – Aug 2026</div>
+    <div class="edu-content">
+      <h3>Ph.D. in Industrial Engineering, Seoul National University</h3>
+      <p>Human Factors and Ergonomics, Department of Industrial Engineering, Seoul National University</p>
+      <p>Life Enhancing Technology Lab (Advised by Woojin Park)</p>
+      <div class="thesis">Dissertation: Design, Development, and Validation of a Conversational Agent for Medication Management Among Individuals with Vision Impairment</div>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-date">Mar 2021 – Feb 2023</div>
+    <div class="edu-content">
+      <h3>M.S. in Sport Science, Seoul National University</h3>
+      <p>Human Exercise Science, Department of Kinesiology, College of Education, Seoul National University</p>
+      <p>Adapted Physical Activity Lab (Advised by Yongho Lee)</p>
+      <div class="thesis">Thesis: Evaluating online knowledge translation of adapted physical activity for people with developmental disabilities</div>
+    </div>
+  </div>
+
+  <div class="edu-item">
+    <div class="edu-date">Mar 2014 – Feb 2019</div>
+    <div class="edu-content">
+      <h3>B.S. &amp; B.A., Sogang University</h3>
+      <p>Bachelor of Arts and Science: Art &amp; Technology, School of Art &amp; Technology</p>
+      <p>Bachelor of Arts: British &amp; American Language and Literature, School of Humanities (Double Major)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════
+     SELECTED PUBLICATIONS — 대표 논문 5편
+     전체 목록은 publications.html에서 관리
+     교체하려면 publications.html에서 pub-item 블록 복사
+     ════════════════════════════════════════════════════ -->
+<section id="selected-pubs" class="fade-in">
+  <div class="section-header">
+    <h2>Selected Publications</h2>
+    <div class="line"></div>
+    <a class="more-link" href="/publications/">Full list →</a>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Lee, H., Sohn, M., Hwang, K., Kim, T., &amp; Park, W. (2025). Exploring Usability of Mobile Vision Assist Applications for People with Vision Impairment. <span class="journal">Assistive Technology.</span> 38(4), 349–359. <a class="doi" href="https://doi.org/10.1080/10400435.2025.2596030">DOI: 10.1080/10400435.2025.2596030</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span> &amp; Park, W. (2025). Developing User-Centered System Design Guidelines for Explainable AI: a Systematic Literature Review. <span class="journal">Artificial Intelligence Review.</span> 58, 386. <a class="doi" href="https://doi.org/10.1007/s10462-025-11363-y">DOI: 10.1007/s10462-025-11363-y</a>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      Kim, H.<sup>#</sup>, <span class="my-name">Hong, S.</span><sup>#</sup>, Park, W. &amp; Ahn, J. (2025). A Bottom-Up Classification of Wheelchair Users Based on Propulsion Kinematics beyond Injury Level: Exploratory Findings. <span class="journal">IEEE Transactions on Neural Systems &amp; Rehabilitation Engineering.</span> 33, 3878-3887. <a class="doi" href="https://doi.org/10.1109/TNSRE.2025.3613726">DOI: 10.1109/TNSRE.2025.3613726</a> <span class="note">(#: Equally contributed)</span>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge scie">SCIE</span><span class="badge q2">Q2</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span><sup>#</sup>, Kim, H.<sup>#</sup>, Ahn, J., &amp; Park, W. (2025). Influence of Time Since Injury and Physical Activity Level on Upper Limb Kinematics and Muscle Activation During Wheelchair Propulsion in Complete T12/L1 Spinal Cord Injury. <span class="journal">BMC Musculoskeletal Disorders.</span> 26, 807. <a class="doi" href="https://doi.org/10.1186/s12891-025-08987-0">DOI: 10.1186/s12891-025-08987-0</a> <span class="note">(#: Equally contributed)</span>
+    </div>
+  </div>
+
+  <div class="pub-item">
+    <div class="pub-badges">
+      <span class="badge ssci">SSCI</span><span class="badge q1">Q1</span><span class="badge first">1st Author</span>
+    </div>
+    <div class="pub-text">
+      <span class="my-name">Hong, S.</span>, Lee, Y., &amp; Park, W. (2024). Evaluating the delivery of physical activity for people with developmental disabilities using an online knowledge translation approach: part 1 – web accessibility. <span class="journal">Disability and Rehabilitation: Assistive Technology.</span> 19(8), 2925–2933. <a class="doi" href="https://doi.org/10.1080/17483107.2024.2322637">DOI: 10.1080/17483107.2024.2322637</a>
+    </div>
+  </div>
+</section>
+
+</div><!-- end container -->
+
+<footer>
+  <div class="container">
+    <div class="foot-nav">
+      <a href="/home/">Home</a>
+      <a href="/publications/">Publications</a>
+      <a href="/projects/">Projects</a>
+      <a href="/experience/">Experience</a>
+    </div>
+    Last updated: Jul 21, 2026 <!-- 날짜 수정 --> · San Hong · Seoul, Republic of Korea
+  </div>
+</footer>
+
+<script src="/site.js"></script>
+
+</body>
+</html>
