@@ -517,6 +517,42 @@ section:last-of-type { padding-bottom: 6rem; }
   border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
+/* ── HERO PORTRAIT ── */
+.hero-portrait {
+  margin: 0 0 1.2rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.5rem; /* 폴라로이드 느낌 여백 — 싫으면 0으로 */
+}
+.hero-portrait img { width: 100%; display: block; }
+
+/* ── BEYOND RESEARCH ── */
+.beyond-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px; /* 오른쪽 사진 폭 */
+  gap: 3rem;
+  align-items: center;
+}
+.fact-item { margin-bottom: 1.8rem; }
+.fact-item:last-child { margin-bottom: 0; }
+.fact-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+.fact-text { font-size: 0.92rem; color: var(--ink); line-height: 1.7; }
+.beyond-photo { margin: 0; border: 1px solid var(--border); background: var(--card); padding: 0.5rem; }
+.beyond-photo img { width: 100%; display: block; }
+.beyond-photo figcaption {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+  padding: 0.5rem 0.2rem 0.1rem;
+}
+
 /* ── FOOTER ── */
 footer {
   border-top: 1px solid var(--border);
@@ -578,6 +614,7 @@ footer .foot-nav a {
   .news-list li { grid-template-columns: 1fr; gap: 0.1rem; padding: 0.7rem 0; }
   .back-to-top { right: 1rem; bottom: 1rem; width: 36px; height: 36px; line-height: 36px; font-size: 1rem; }
   .proj-item { grid-template-columns: 1fr; }
+  .beyond-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 }
 
 /* ── ANIMATION ── */
