@@ -63,6 +63,16 @@ a:hover { color: var(--accent-light); }
   transition: opacity 0.2s;
 }
 .site-nav .brand:hover img { opacity: 0.75; }
+.site-nav .nav-toggle {
+  display: none; /* 데스크톱에서는 숨김 — 모바일에서만 표시 */
+  background: none;
+  border: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+}
 .site-nav .nav-links { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .site-nav .nav-links a {
   font-size: 0.78rem;
@@ -526,9 +536,38 @@ footer .foot-nav a {
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .site-nav .nav-inner { padding: 0.5rem 1.2rem; }
+  .site-nav .nav-inner {
+    padding: 0.5rem 1.2rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
   .site-nav .brand img { height: 30px; }
-  .site-nav .nav-links a { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
+  .site-nav .nav-toggle { display: block; }
+  /* 메뉴는 기본 숨김 — 햄버거 누르면 아래로 펼쳐짐 */
+  .site-nav .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+    padding: 0.4rem 0 0.8rem;
+  }
+  .site-nav.open .nav-links { display: flex; }
+  .site-nav .nav-links a {
+    font-size: 0.8rem;
+    padding: 0.7rem 1.4rem;
+  }
+  .site-nav .nav-links a.active {
+    border-bottom: none;
+    border-left: 3px solid var(--accent);
+    background: rgba(139, 58, 58, 0.05);
+  }
   .hero { padding: 2.5rem 0 3rem; }
   .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
   .hero h1 { font-size: 2.2rem; }
